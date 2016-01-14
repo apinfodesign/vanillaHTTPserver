@@ -1,48 +1,54 @@
-//code base from MN
-
 var http = require( 'http' );
-var fs = require( 'fs' );
-var qs = require( 'querystring' );
+var url  = require('url');
+var fs   = require( 'fs' );
+//var qs = require( 'querystring' );
+ 
+var server = http.createServer(function(req, res){
 
-var indexPage = fs.readFileSync( 'index.html', 'utf-8' );
+    var inpath = url.parse(req.url).pathname;
+    var name = 'miles'; //testing only
+    var date = new Date();
+     
+    console.log ('incoming path name is: ', inpath);
 
-var pets = [
-    { type: 'cat', name: 'bob' },
-    { type: 'snake', name: 'smiley' },
-    { type: 'dog', name: 'fido' },
-    { type: 'bird', name: 'poly' }
-];
+    if ( inpath === '/time' && req.method === 'GET' ){
+        console.log(inpath,' is inpath');
+        var outTime = date.getHours().toString()+':'+
+                      date.getMinutes().toString();
+        console.log(outTime);
+        res.write(outTime + ' is the time');
+        res.end();
+    }
 
-var server = http.createServer(function( req, res ){
-    
-    
-   if ( req.url === '/pets' ) {
-       if( req.method === 'POST' ) {
-           pets.push({ type: 'new', name: 'new' });
-       }
-       res.writeHead(200, { 
-        'Content-Type': 'application/json'
-       });
-       
-       res.end( JSON.stringify(pets) );
-   }
-   else {
-       
-    res.writeHead(200, { 
-        'Content-Type': 'text/html'
-    });
-    
-    var split = req.url.split('?');
-    var url = split[0];
-    var query = split[1];
-    
-    if ( query ) query = query.split( '&' );
-    
-    res.end( indexPage
-        .replace( 'method', req.method )
-        .replace( 'url', url )
-        .replace( 'qs', query ) );   
-   }
+    else if (inpath === '/greet/'+name && req.method === 'GET' ){
+        console.log("Greeting name received", name);
+        res.write('hello and welcome '+name);
+        res.end();    
+    }
+
+    else if ( req.method === 'POST' ){
+        console.log("Post request received");
+        var name = '';         
+        req.on('data', function(chunk) {
+                console.log("Received body data:");
+                console.log(chunk.toString());
+        });
+
+        req.on('end', function() {
+          // empty 200 OK response for now
+          res.writeHead(200, "OK " , {'Content-Type': 'text/html'});
+          res.end();
+        });
+     }
+
+    else {
+        console.log("[405] " + req.method + " to " + req.url);
+        res.writeHead(405, "Method not supported", {'Content-Type': 'text/html'});
+        // res.end();
+    }
 });
 
-server.listen( 8080 );
+server.listen(8080, function() {
+  console.log('* Listening on port 8080');
+});
+ 

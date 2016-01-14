@@ -1,17 +1,30 @@
 {
-  "name": "miles",
+  "name": "vanillaHTTPserver",
   "version": "1.0.0",
-  "description": "vanila http server",
-  "main": "server.js",
+  "description": "vanilaHTTPserver",
+  "main": "startServer.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "gulp",
     "start": "node tcpserver.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:apinfodesign/vanillaHTTPserver.git"
   },
   "author": "miles",
   "license": "ISC",
+  "homepage": "https://github.com/apinfodesign/vanillaHTTPserver",
   "dependencies": {
+    "chai": "^3.4.1",
+    "chai-http": "^1.0.0",
     "find-remove": "^0.2.8",
     "fs": "0.0.2",
-    "mocha": "^2.3.4"
-   }
+    "gulp": "^3.9.0",
+    "gulp-jshint": "^2.0.0",
+    "gulp-mocha": "^2.2.0",
+    "jshint": "^2.8.0",
+    "jshint-stylish": "^2.1.0",
+    "mocha": "^2.3.4",
+    "nodemon": "^1.8.1"
+  }
 }

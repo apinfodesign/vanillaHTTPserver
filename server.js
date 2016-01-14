@@ -1,6 +1,6 @@
-var http = require( 'http' );
-var url  = require('url');
-var fs   = require( 'fs' );
+var http = require('http' );
+var url  = require('url'  );
+var fs   = require('fs'   );
 //var qs = require( 'querystring' );
  
 var server = http.createServer(function(req, res){
@@ -16,12 +16,16 @@ var server = http.createServer(function(req, res){
         var outTime = date.getHours().toString()+':'+
                       date.getMinutes().toString();
         console.log(outTime);
+        res.writeHead(200, "OK" , {'Content-Type': 'text/plain'});
         res.write(outTime + ' is the time');
         res.end();
     }
 
-    else if (inpath === '/greet/'+name && req.method === 'GET' ){
+    else if ( inpath === '/greet/'+name && req.method === 'GET' ){
         console.log("Greeting name received", name);
+
+        res.writeHead(200, "OK" , {'Content-Type': 'text/plain'});
+
         res.write('hello and welcome '+name);
         res.end();    
     }
@@ -36,7 +40,7 @@ var server = http.createServer(function(req, res){
 
         req.on('end', function() {
           // empty 200 OK response for now
-          res.writeHead(200, "OK " , {'Content-Type': 'text/html'});
+          res.writeHead(200, "OK" , {'Content-Type': 'text/plain'});
           res.end();
         });
      }
@@ -48,7 +52,4 @@ var server = http.createServer(function(req, res){
     }
 });
 
-server.listen(8080, function() {
-  console.log('* Listening on port 8080');
-});
- 
+module.exports=server;

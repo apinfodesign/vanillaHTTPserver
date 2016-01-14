@@ -8,7 +8,6 @@ It should also respond to a get request to /greet/name where name is any single 
 
 It should also have a separate post request to /greet that takes the name in JSON format.
  
-
 There should be tests using chaiHTTP for both routes, as well as a gulpfile.js/package.json
 
  

@@ -1,6 +1,6 @@
-// var http = require( 'http' );
-// var server = require ('./server');
+var http = require( 'http' );
+var server = require ('./server');
 
-// server.listen(8080, function() {
-//   console.log(' Listening on port 8080');
-// });
+server.listen(8080, function() {
+  console.log(' Listening on port 8080');
+});

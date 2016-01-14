@@ -1,0 +1,17 @@
+{
+  "name": "miles",
+  "version": "1.0.0",
+  "description": "vanila http server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node tcpserver.js"
+  },
+  "author": "miles",
+  "license": "ISC",
+  "dependencies": {
+    "find-remove": "^0.2.8",
+    "fs": "0.0.2",
+    "mocha": "^2.3.4"
+   }
+}

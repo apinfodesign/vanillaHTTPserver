@@ -8,7 +8,7 @@ var server = http.createServer(function(req, res){
     var inpath = url.parse(req.url).pathname;
     var name = 'miles'; //testing only
     var date = new Date();
-     
+
     console.log ('incoming path name is: ', inpath);
 
     if ( inpath === '/time' && req.method === 'GET' ){
@@ -21,34 +21,33 @@ var server = http.createServer(function(req, res){
         res.end();
     }
 
-    else if ( inpath === '/greet/'+name && req.method === 'GET' ){
-        console.log("Greeting name received", name);
-
+    else if ( (inpath.slice(0, 6) === '/greet') && req.method === 'GET' ){
+        console.log("Greeting name received on path /greet", name);
+        var name = inpath.slice(7, inpath.length);
         res.writeHead(200, "OK" , {'Content-Type': 'text/plain'});
 
-        res.write('hello and welcome '+name);
+        res.write('hello and welcome ' + name);
         res.end();    
     }
 
     else if ( req.method === 'POST' ){
-        console.log("Post request received");
-        var name = '';         
-        req.on('data', function(chunk) {
-                console.log("Received body data:");
-                console.log(chunk.toString());
-        });
+        console.log("Post request received (raw json )");
+        req.on('data', function(data) {
+            response = JSON.parse(data.toString()).name;
+            console.log("response is: ", response);
+         });
 
         req.on('end', function() {
-          // empty 200 OK response for now
-          res.writeHead(200, "OK" , {'Content-Type': 'text/plain'});
-          res.end();
+            res.writeHead(200, "OK" , {'Content-Type': 'text/plain'});
+            res.write('*** hello to ' + response + ' ***');
+            res.end();
         });
      }
 
     else {
         console.log("[405] " + req.method + " to " + req.url);
         res.writeHead(405, "Method not supported", {'Content-Type': 'text/html'});
-        // res.end();
+        res.end();
     }
 });
 

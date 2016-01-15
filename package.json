@@ -4,8 +4,8 @@
   "description": "vanilaHTTPserver",
   "main": "startServer.js",
   "scripts": {
-    "test": "gulp",
-    "start": "node tcpserver.js"
+    "test": "gulp watch-mocha",
+    "start": "nodemon startServer.js"
   },
   "repository": {
     "type": "git",

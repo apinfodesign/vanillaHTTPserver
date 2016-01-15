@@ -38,7 +38,7 @@ describe('basic http server', function() {
   it('accepts name in JSON format on /greet', function(done) {
     chai.request(server)
         .post('/greet')
-        .send({"name": "miles"})
+        .send({"name": "rudolph"})
         .end(function(err, res) {
             expect(err).to.be.null;
             expect(res).to.have.status(200);
